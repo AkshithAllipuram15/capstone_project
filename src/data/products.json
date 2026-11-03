@@ -1,0 +1,193 @@
+{
+  "categories": [
+    {
+      "id": "3",
+      "name": "Home Décor",
+      "image": "home-decor.jpg",
+      "bgColor": "#C14953"
+    },
+    {
+      "id": "4",
+      "name": "Kitchen Essentials",
+      "image": "Kitchen-Essentials.jpg",
+      "bgColor": "#4CAF50"
+    },
+    {
+      "id": "1",
+      "name": "Cleaning Supplies",
+      "image": "Cleaning-Supplies.jpg",
+      "bgColor": "#82A9A0"
+    },
+    {
+      "id": "5",
+      "name": "Storage Items",
+      "image": "Storage-items.jpg",
+      "bgColor": "#E5B0EA"
+    },
+    {
+      "id": "2",
+      "name": "Daily Accessories",
+      "image": "Daily-Use-Accessories.jpg",
+      "bgColor": "#FFB26B"
+    }
+  ],
+  "products": [
+    {
+      "id": "101",
+      "categoryId": "3",
+      "name": "Modern Red Chair",
+      "price": 549,
+      "originalPrice": 799,
+      "discount": "31% OFF",
+      "rating": 4.8,
+      "reviews": 129,
+      "inStock": true,
+      "description": "Ergonomic modern red accent chair with solid wooden legs and premium velvet cushioning.",
+      "image": "home-decor.jpg"
+    },
+    {
+      "id": "102",
+      "categoryId": "3",
+      "name": "Dining Table",
+      "price": 1599,
+      "originalPrice": 2199,
+      "discount": "27% OFF",
+      "rating": 4.5,
+      "reviews": 85,
+      "inStock": true,
+      "description": "Minimalist circular dining table crafted with natural oak wood finish and durable build.",
+      "image": "home-decor.jpg"
+    },
+    {
+      "id": "103",
+      "categoryId": "3",
+      "name": "LED Table Lamp",
+      "price": 1299,
+      "originalPrice": 1699,
+      "discount": "23% OFF",
+      "rating": 4.6,
+      "reviews": 94,
+      "inStock": true,
+      "description": "Contemporary desk and bedside lamp with dimmable warm LED light and touch controls.",
+      "image": "home-decor.jpg"
+    },
+    {
+      "id": "104",
+      "categoryId": "3",
+      "name": "Aromatherapy Candle",
+      "price": 459,
+      "originalPrice": 650,
+      "discount": "29% OFF",
+      "rating": 4.7,
+      "reviews": 210,
+      "inStock": true,
+      "description": "Hand-poured soy wax scented candle with natural lavender and vanilla essential oils.",
+      "image": "home-decor.jpg"
+    },
+    {
+      "id": "201",
+      "categoryId": "4",
+      "name": "Measuring Cup Set",
+      "price": 399,
+      "originalPrice": 599,
+      "discount": "25% OFF",
+      "rating": 4.4,
+      "reviews": 156,
+      "inStock": true,
+      "description": "Clear measuring cups with easy-marked labels and durable food-grade stainless steel construction.",
+      "image": "Kitchen-Essentials.jpg"
+    },
+    {
+      "id": "202",
+      "categoryId": "4",
+      "name": "Stainless Steel Cookware",
+      "price": 1899,
+      "originalPrice": 2499,
+      "discount": "24% OFF",
+      "rating": 4.6,
+      "reviews": 112,
+      "inStock": true,
+      "description": "Professional 3-piece non-stick induction compatible pots and pans cookware set.",
+      "image": "Kitchen-Essentials.jpg"
+    },
+    {
+      "id": "301",
+      "categoryId": "1",
+      "name": "Liquid Detergent",
+      "price": 299,
+      "originalPrice": 399,
+      "discount": "25% OFF",
+      "rating": 4.5,
+      "reviews": 340,
+      "inStock": true,
+      "description": "Deep action fabric wash liquid detergent that removes tough stains while preserving color.",
+      "image": "Cleaning-Supplies.jpg"
+    },
+    {
+      "id": "302",
+      "categoryId": "1",
+      "name": "Multipurpose Disinfectant Spray",
+      "price": 199,
+      "originalPrice": 249,
+      "discount": "20% OFF",
+      "rating": 4.7,
+      "reviews": 280,
+      "inStock": true,
+      "description": "Instant antibacterial and antiviral surface cleaner and multi-surface sanitizer spray.",
+      "image": "Cleaning-Supplies.jpg"
+    },
+    {
+      "id": "401",
+      "categoryId": "5",
+      "name": "Storage Baskets Set",
+      "price": 649,
+      "originalPrice": 899,
+      "discount": "28% OFF",
+      "rating": 4.5,
+      "reviews": 95,
+      "inStock": true,
+      "description": "Woven cotton rope organizer bins perfect for toys, laundry, and shelf storage.",
+      "image": "Storage-items.jpg"
+    },
+    {
+      "id": "402",
+      "categoryId": "5",
+      "name": "Wardrobe Organizer",
+      "price": 499,
+      "originalPrice": 699,
+      "discount": "28% OFF",
+      "rating": 4.3,
+      "reviews": 78,
+      "inStock": true,
+      "description": "Collapsible multi-layer fabric hanging wardrobe shelves for clothing and accessories.",
+      "image": "Storage-items.jpg"
+    },
+    {
+      "id": "501",
+      "categoryId": "2",
+      "name": "Daily Travel Backpack",
+      "price": 899,
+      "originalPrice": 1299,
+      "discount": "30% OFF",
+      "rating": 4.6,
+      "reviews": 142,
+      "inStock": true,
+      "description": "Water-resistant lightweight commuter laptop backpack with ergonomic shoulder straps.",
+      "image": "Daily-Use-Accessories.jpg"
+    },
+    {
+      "id": "502",
+      "categoryId": "2",
+      "name": "Leather Wallet",
+      "price": 449,
+      "originalPrice": 599,
+      "discount": "25% OFF",
+      "rating": 4.4,
+      "reviews": 88,
+      "inStock": true,
+      "description": "Slim bifold genuine leather wallet with RFID blocking technology and multiple card slots.",
+      "image": "Daily-Use-Accessories.jpg"
+    }
+  ]
+}
+
