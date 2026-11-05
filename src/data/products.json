@@ -29,6 +29,12 @@
       "name": "Daily Accessories",
       "image": "Daily-Use-Accessories.jpg",
       "bgColor": "#FFB26B"
+    },
+    {
+      "id": "6",
+      "name": "Tech Gadgets",
+      "image": "tech-gadgets.jpg",
+      "bgColor": "#3D8F5A"
     }
   ],
   "products": [
@@ -187,6 +193,58 @@
       "inStock": true,
       "description": "Slim bifold genuine leather wallet with RFID blocking technology and multiple card slots.",
       "image": "leather-wallet.jpg"
+    },
+    {
+      "id": "601",
+      "categoryId": "6",
+      "name": "Wireless Noise Cancelling Headphones",
+      "price": 1999,
+      "originalPrice": 2499,
+      "discount": "20% OFF",
+      "rating": 4.8,
+      "reviews": 142,
+      "inStock": true,
+      "description": "High-fidelity wireless over-ear headphones with active noise cancellation, deep bass, and 30-hour battery life.",
+      "image": "wireless-headphones.jpg"
+    },
+    {
+      "id": "602",
+      "categoryId": "6",
+      "name": "Smart Fitness Watch",
+      "price": 1299,
+      "originalPrice": 1799,
+      "discount": "28% OFF",
+      "rating": 4.7,
+      "reviews": 98,
+      "inStock": true,
+      "description": "Premium smartwatch with AMOLED touch display, heart rate monitor, sleep tracking, and water resistance.",
+      "image": "smart-watch.jpg"
+    },
+    {
+      "id": "603",
+      "categoryId": "6",
+      "name": "Pro Gaming Console & Controller",
+      "price": 3499,
+      "originalPrice": 4299,
+      "discount": "19% OFF",
+      "rating": 4.9,
+      "reviews": 210,
+      "inStock": true,
+      "description": "Next-gen entertainment gaming console with ergonomic wireless controller, 1TB high-speed storage, and 4K HDR support.",
+      "image": "gaming-console.jpg"
+    },
+    {
+      "id": "604",
+      "categoryId": "6",
+      "name": "Ultra-Slim Smart Tablet",
+      "price": 2899,
+      "originalPrice": 3499,
+      "discount": "17% OFF",
+      "rating": 4.6,
+      "reviews": 88,
+      "inStock": true,
+      "description": "Crisp 10.5-inch retina display tablet with stereo surround speakers, stylus pen support, and all-day battery life.",
+      "image": "smart-tablet.jpg"
     }
   ]
 }

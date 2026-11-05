@@ -4,79 +4,59 @@ import {
   Text,
   StyleSheet,
   Image,
-  ScrollView,
   SafeAreaView,
   TouchableOpacity,
   Platform,
   StatusBar,
+  useWindowDimensions,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { getImage } from '../utils/imageMap';
-import data from '../data/products.json';
 
 export default function HomeScreen({ navigation }: any) {
-  const categories = data.categories;
+  const { width: windowWidth, height: windowHeight } = useWindowDimensions();
+
+  // Responsive height according to viewport, keeping entire screen visible without scrolling
+  const imageHeight = Math.round(windowHeight * 0.40);
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={styles.container}>
-        {/* Brand Header */}
-        <View style={styles.header}>
+      <View style={styles.container}>
+        {/* Centered Brand Header Matching Wireframe */}
+        <View style={styles.headerContainer}>
           <Text style={styles.logoText}>MyShoppy</Text>
-          <View style={styles.logoUnderline} />
+          <View style={styles.underlineRow}>
+            <View style={styles.logoUnderline} />
+            <View style={styles.logoDot} />
+          </View>
         </View>
 
-        {/* Promo Image */}
-        <View style={styles.imageContainer}>
+        {/* Full Viewport Width Promotional Illustration */}
+        <View style={[styles.imageContainer, { width: windowWidth, height: imageHeight }]}>
           <Image
             source={getImage('home-screen.png')}
-            style={styles.promoImage}
+            style={[styles.promoImage, { width: windowWidth }]}
             resizeMode="cover"
           />
         </View>
 
-        {/* Welcome Section */}
-        <View style={styles.welcomeBox}>
-          <Text style={styles.welcomeTitle}>Shopping And Department Store</Text>
-          <Text style={styles.welcomeSubtitle}>
-            Welcome to MyShoppy. Find all your home, kitchen, and daily essentials at great prices.
+        {/* Wireframe Welcome Text & Browse Categories Button Directly Below */}
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>
+            Shopping And{'\n'}Department Store.
           </Text>
+          <Text style={styles.subtitle}>
+            Shopping is a bit of a relaxing hobby for me, which{'\n'}is sometimes troubling for the bank balance.
+          </Text>
+
           <TouchableOpacity
             style={styles.browseButton}
             onPress={() => navigation.navigate('Categories')}
+            activeOpacity={0.85}
           >
             <Text style={styles.browseButtonText}>Browse Categories</Text>
           </TouchableOpacity>
         </View>
-
-        {/* Categories Preview */}
-        <Text style={styles.sectionTitle}>Featured Categories</Text>
-        <View style={styles.grid}>
-          {categories.map((item: any, index: number) => {
-            const isLastOdd = index === categories.length - 1 && categories.length % 2 !== 0;
-            return (
-              <TouchableOpacity
-                key={item.id}
-                style={[styles.card, isLastOdd && styles.cardFull]}
-                activeOpacity={0.85}
-                onPress={() =>
-                  navigation.navigate('ProductList', {
-                    categoryId: item.id,
-                    categoryName: item.name,
-                  })
-                }
-              >
-                <Image
-                  source={getImage(item.image)}
-                  style={styles.cardImage}
-                  resizeMode="cover"
-                />
-                <Text style={styles.cardName}>{item.name}</Text>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
@@ -87,105 +67,80 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   container: {
-    paddingHorizontal: 16,
+    flex: 1,
+    backgroundColor: '#FFFFFF',
   },
-  header: {
+  headerContainer: {
     alignItems: 'center',
-    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 24) + 6 : 14,
-    marginBottom: 14,
+    justifyContent: 'center',
+    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 24) + 4 : 6,
+    paddingBottom: 6,
+    backgroundColor: '#FFFFFF',
   },
   logoText: {
     fontSize: 24,
-    color: '#4A7C7C',
+    color: '#4E6E70',
     fontWeight: 'bold',
     fontStyle: 'italic',
   },
+  underlineRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 2,
+  },
   logoUnderline: {
-    width: 45,
-    height: 3,
-    backgroundColor: '#4A7C7C',
-    marginTop: 4,
+    width: 54,
+    height: 2.5,
+    backgroundColor: '#4E6E70',
     borderRadius: 2,
   },
+  logoDot: {
+    width: 5,
+    height: 5,
+    borderRadius: 2.5,
+    backgroundColor: '#4E6E70',
+    marginLeft: 2,
+  },
   imageContainer: {
-    height: 200,
-    borderRadius: 8,
+    backgroundColor: '#8CE1F6',
     overflow: 'hidden',
-    marginBottom: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   promoImage: {
-    width: '100%',
     height: '100%',
   },
-  welcomeBox: {
-    backgroundColor: '#F0F8F8',
-    padding: 16,
-    borderRadius: 8,
-    marginBottom: 20,
+  textContainer: {
+    flex: 1,
+    paddingHorizontal: 24,
+    paddingTop: 18,
+    paddingBottom: 20,
+    backgroundColor: '#E8F5F5',
+    justifyContent: 'flex-start',
   },
-  welcomeTitle: {
-    fontSize: 18,
+  title: {
+    fontSize: 24,
     fontWeight: 'bold',
-    color: '#2F4F4F',
+    color: '#133B39',
     marginBottom: 8,
+    lineHeight: 30,
   },
-  welcomeSubtitle: {
+  subtitle: {
     fontSize: 13,
-    color: '#555',
-    lineHeight: 19,
-    marginBottom: 14,
+    color: '#4E6E70',
+    lineHeight: 20,
+    marginBottom: 16,
   },
   browseButton: {
-    backgroundColor: '#4A7C7C',
+    backgroundColor: '#4E6E70',
     paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 6,
+    paddingHorizontal: 20,
+    borderRadius: 8,
     alignSelf: 'flex-start',
   },
   browseButtonText: {
     color: '#FFFFFF',
     fontWeight: 'bold',
-    fontSize: 13,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 12,
-  },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    paddingBottom: 24,
-  },
-  card: {
-    width: '48%',
-    height: 140,
-    borderRadius: 10,
-    overflow: 'hidden',
-    marginBottom: 12,
-    backgroundColor: '#EEEEEE',
-    position: 'relative',
-  },
-  cardFull: {
-    width: '100%',
-    height: 130,
-  },
-  cardImage: {
-    width: '100%',
-    height: '100%',
-  },
-  cardName: {
-    position: 'absolute',
-    bottom: 10,
-    left: 10,
-    right: 10,
-    color: '#FFFFFF',
-    fontSize: 15,
-    fontWeight: 'bold',
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 3,
+    fontSize: 13.5,
   },
 });

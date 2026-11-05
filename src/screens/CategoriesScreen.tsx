@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Image,
   SafeAreaView,
-  TextInput,
   Platform,
   StatusBar,
 } from 'react-native';
@@ -16,15 +15,11 @@ import data from '../data/products.json';
 import { getImage } from '../utils/imageMap';
 
 export default function CategoriesScreen({ navigation }: any) {
-  const [search, setSearch] = useState('');
-
-  const filtered = data.categories.filter((cat: any) =>
-    cat.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const categories = data.categories;
 
   const renderCategory = ({ item }: { item: any }) => (
     <TouchableOpacity
-      style={styles.card}
+      style={[styles.card, { backgroundColor: item.bgColor || '#4E6E70' }]}
       activeOpacity={0.85}
       onPress={() =>
         navigation.navigate('ProductList', {
@@ -33,12 +28,14 @@ export default function CategoriesScreen({ navigation }: any) {
         })
       }
     >
-      <Image
-        source={getImage(item.image)}
-        style={styles.cardImage}
-        resizeMode="cover"
-      />
-      <Text style={styles.categoryName}>{item.name}</Text>
+      <Text style={styles.cardTitle}>{item.name}</Text>
+      <View style={styles.imageWrapper}>
+        <Image
+          source={getImage(item.image)}
+          style={styles.cardImage}
+          resizeMode="cover"
+        />
+      </View>
     </TouchableOpacity>
   );
 
@@ -46,32 +43,28 @@ export default function CategoriesScreen({ navigation }: any) {
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         {/* Brand Header */}
-        <View style={styles.header}>
-          <Text style={styles.logoText}>MyShoppy</Text>
-          <View style={styles.logoUnderline} />
+        <View style={styles.topRow}>
+          <View style={styles.logoBox}>
+            <Text style={styles.logoText}>MyShoppy</Text>
+            <View style={styles.underlineRow}>
+              <View style={styles.logoUnderline} />
+              <View style={styles.logoDot} />
+            </View>
+          </View>
         </View>
 
-        <Text style={styles.title}>Shop by Category</Text>
-        <Text style={styles.subtitle}>Find products by your favorite category</Text>
+        {/* Wireframe Categories Title */}
+        <Text style={styles.title}>Categories</Text>
 
-        {/* Search */}
-        <View style={styles.searchBar}>
-          <Ionicons name="search" size={18} color="#777" />
-          <TextInput
-            placeholder="Search categories"
-            value={search}
-            onChangeText={setSearch}
-            style={styles.searchInput}
-          />
-        </View>
-
-        {/* Category Cards with Images Filling the Cards */}
+        {/* 2-Column Categories Grid Matching Wireframe */}
         <FlatList
-          data={filtered}
+          data={categories}
           keyExtractor={(item) => item.id}
           renderItem={renderCategory}
+          numColumns={2}
+          columnWrapperStyle={styles.row}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 20 }}
+          contentContainerStyle={styles.listContainer}
         />
       </View>
     </SafeAreaView>
@@ -87,70 +80,83 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 16,
   },
-  header: {
+  topRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 24) + 8 : 12,
+    paddingBottom: 8,
+  },
+  logoBox: {
     alignItems: 'flex-start',
-    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 24) + 6 : 10,
-    marginBottom: 10,
   },
   logoText: {
-    fontSize: 22,
-    color: '#4A7C7C',
+    fontSize: 24,
+    color: '#4E6E70',
     fontWeight: 'bold',
     fontStyle: 'italic',
   },
-  logoUnderline: {
-    width: 40,
-    height: 3,
-    backgroundColor: '#4A7C7C',
-    marginTop: 3,
-    borderRadius: 2,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#222',
-    marginTop: 6,
-  },
-  subtitle: {
-    fontSize: 13,
-    color: '#777',
-    marginBottom: 12,
-  },
-  searchBar: {
+  underlineRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F5F5F5',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    height: 42,
-    marginBottom: 14,
+    marginTop: 2,
   },
-  searchInput: {
-    flex: 1,
-    marginLeft: 8,
-    fontSize: 14,
+  logoUnderline: {
+    width: 55,
+    height: 2.5,
+    backgroundColor: '#4E6E70',
+    borderRadius: 2,
+  },
+  logoDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: '#4E6E70',
+    marginLeft: 2,
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#4E6E70',
+    marginTop: 14,
+    marginBottom: 16,
+  },
+  listContainer: {
+    paddingBottom: 80,
+  },
+  row: {
+    justifyContent: 'space-between',
   },
   card: {
-    height: 140,
-    borderRadius: 12,
+    width: '48%',
+    height: 175,
+    borderRadius: 14,
+    paddingTop: 12,
+    paddingHorizontal: 10,
+    paddingBottom: 10,
+    marginBottom: 16,
+    justifyContent: 'space-between',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    shadowOffset: { width: 0, height: 1 },
+  },
+  cardTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    textAlign: 'center',
+  },
+  imageWrapper: {
+    width: '100%',
+    height: 120,
+    borderRadius: 10,
     overflow: 'hidden',
-    marginBottom: 14,
-    backgroundColor: '#EEEEEE',
-    position: 'relative',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
   cardImage: {
     width: '100%',
     height: '100%',
-  },
-  categoryName: {
-    position: 'absolute',
-    bottom: 12,
-    left: 14,
-    color: '#FFFFFF',
-    fontSize: 18,
-    fontWeight: 'bold',
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 4,
   },
 });

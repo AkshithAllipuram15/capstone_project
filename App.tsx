@@ -9,8 +9,6 @@ import CategoriesScreen from './src/screens/CategoriesScreen';
 import CartScreen from './src/screens/CartScreen';
 import ProductListScreen from './src/screens/ProductListScreen';
 import ProductDetailScreen from './src/screens/ProductDetailScreen';
-import CheckoutScreen from './src/screens/CheckoutScreen';
-import OrderSuccessScreen from './src/screens/OrderSuccessScreen';
 import { CartProvider, useCart } from './src/context/CartContext';
 
 const Tab = createBottomTabNavigator();
@@ -23,14 +21,21 @@ function TabNavigator() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#2A6B6B',
-        tabBarInactiveTintColor: '#888888',
+        tabBarActiveTintColor: '#FFFFFF',
+        tabBarInactiveTintColor: 'rgba(255, 255, 255, 0.65)',
         tabBarStyle: {
-          backgroundColor: '#FFFFFF',
-          borderTopColor: '#EEEEEE',
-          height: 60,
+          backgroundColor: '#4E6E70',
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          height: 65,
           paddingBottom: 8,
-          paddingTop: 6,
+          paddingTop: 8,
+          borderTopWidth: 0,
+          elevation: 8,
+        },
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: '600',
         },
       }}
     >
@@ -39,7 +44,7 @@ function TabNavigator() {
         component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => <Ionicons name="home-outline" size={size || 22} color={color} />,
+          tabBarIcon: ({ color }) => <Ionicons name="home" size={24} color={color} />,
         }}
       />
       <Tab.Screen
@@ -47,7 +52,7 @@ function TabNavigator() {
         component={CategoriesScreen}
         options={{
           tabBarLabel: 'Categories',
-          tabBarIcon: ({ color, size }) => <Ionicons name="grid-outline" size={size || 22} color={color} />,
+          tabBarIcon: ({ color }) => <Ionicons name="grid" size={24} color={color} />,
         }}
       />
       <Tab.Screen
@@ -56,7 +61,13 @@ function TabNavigator() {
         options={{
           tabBarLabel: 'Cart',
           tabBarBadge: totalCount > 0 ? totalCount : undefined,
-          tabBarIcon: ({ color, size }) => <Ionicons name="cart-outline" size={size || 22} color={color} />,
+          tabBarBadgeStyle: {
+            backgroundColor: '#E53935',
+            color: '#FFFFFF',
+            fontSize: 10,
+            fontWeight: 'bold',
+          },
+          tabBarIcon: ({ color }) => <Ionicons name="cart" size={24} color={color} />,
         }}
       />
     </Tab.Navigator>
@@ -71,8 +82,6 @@ export default function App() {
           <Stack.Screen name="MainTabs" component={TabNavigator} />
           <Stack.Screen name="ProductList" component={ProductListScreen} />
           <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
-          <Stack.Screen name="Checkout" component={CheckoutScreen} />
-          <Stack.Screen name="OrderSuccess" component={OrderSuccessScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </CartProvider>

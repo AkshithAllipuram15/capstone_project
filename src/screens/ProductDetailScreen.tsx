@@ -75,7 +75,31 @@ export default function ProductDetailScreen({ route, navigation }: any) {
 
           {/* Product Details */}
           <Text style={styles.title}>{product.name}</Text>
-          <Text style={styles.price}>₹{product.price}</Text>
+
+          {/* Price, Original Price & Discount */}
+          <View style={styles.priceRow}>
+            <Text style={styles.price}>₹{product.price}</Text>
+            {product.originalPrice && (
+              <Text style={styles.originalPrice}>₹{product.originalPrice}</Text>
+            )}
+            {product.discount && (
+              <View style={styles.discountBadge}>
+                <Text style={styles.discountText}>{product.discount}</Text>
+              </View>
+            )}
+          </View>
+
+          {/* Rating, Reviews & Stock Status */}
+          <View style={styles.ratingRow}>
+            <Ionicons name="star" size={16} color="#EAA023" />
+            <Text style={styles.ratingText}>{product.rating || 4.5}</Text>
+            {product.reviews && (
+              <Text style={styles.reviewsText}>({product.reviews} reviews)</Text>
+            )}
+            {product.inStock !== false && (
+              <Text style={styles.stockText}>• In Stock</Text>
+            )}
+          </View>
 
           <Text style={styles.sectionLabel}>Description</Text>
           <Text style={styles.description}>{product.description}</Text>
@@ -192,13 +216,57 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: 6,
+    marginBottom: 8,
+  },
+  priceRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
   },
   price: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: 'bold',
-    color: '#4A7C7C',
-    marginBottom: 14,
+    color: '#4E6E70',
+    marginRight: 10,
+  },
+  originalPrice: {
+    fontSize: 16,
+    color: '#888888',
+    textDecorationLine: 'line-through',
+    marginRight: 10,
+  },
+  discountBadge: {
+    backgroundColor: '#E8F5E9',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 4,
+  },
+  discountText: {
+    fontSize: 13,
+    color: '#2E7D32',
+    fontWeight: 'bold',
+  },
+  ratingRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  ratingText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#333333',
+    marginLeft: 4,
+    marginRight: 6,
+  },
+  reviewsText: {
+    fontSize: 13,
+    color: '#666666',
+    marginRight: 10,
+  },
+  stockText: {
+    fontSize: 13,
+    color: '#2E7D32',
+    fontWeight: '600',
   },
   sectionLabel: {
     fontSize: 15,

@@ -19,10 +19,15 @@ export default function ProductListScreen({ route, navigation }: any) {
   const { categoryId, categoryName } = route.params || { categoryId: '3', categoryName: 'Home Décor' };
   const { addToCart, totalCount } = useCart();
   const [addedId, setAddedId] = useState<string | null>(null);
+  const [wishlist, setWishlist] = useState<Record<string, boolean>>({});
 
   const products = data.products.filter(
     (item: any) => !categoryId || item.categoryId === categoryId
   );
+
+  const toggleWishlist = (id: string) => {
+    setWishlist((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
 
   const handleAdd = (item: any) => {
     addToCart(item, 1);
@@ -32,15 +37,36 @@ export default function ProductListScreen({ route, navigation }: any) {
 
   const renderProduct = ({ item }: { item: any }) => (
     <View style={styles.card}>
-      <TouchableOpacity onPress={() => navigation.navigate('ProductDetail', { product: item })}>
-        <Image
-          source={getImage(item.image)}
-          style={styles.productImage}
-          resizeMode="cover"
-        />
-        <Text style={styles.productTitle} numberOfLines={1}>{item.name}</Text>
+      <TouchableOpacity
+        activeOpacity={0.85}
+        onPress={() => navigation.navigate('ProductDetail', { product: item })}
+      >
+        <View style={styles.imageBox}>
+          <Image
+            source={getImage(item.image)}
+            style={styles.productImage}
+            resizeMode="cover"
+          />
+          {/* Wireframe Heart Wishlist Icon */}
+          <TouchableOpacity
+            style={styles.heartButton}
+            onPress={() => toggleWishlist(item.id)}
+          >
+            <Ionicons
+              name={wishlist[item.id] ? 'heart' : 'heart-outline'}
+              size={18}
+              color={wishlist[item.id] ? '#E53E3E' : '#718096'}
+            />
+          </TouchableOpacity>
+        </View>
+
+        <Text style={styles.productTitle} numberOfLines={1}>
+          {item.name}
+        </Text>
         <Text style={styles.price}>₹{item.price}</Text>
-        <Text style={styles.description} numberOfLines={2}>{item.description}</Text>
+        <Text style={styles.description} numberOfLines={2}>
+          {item.description}
+        </Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -57,40 +83,39 @@ export default function ProductListScreen({ route, navigation }: any) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        {/* Top Header with Back, Title, Home & Cart Icons */}
+        {/* Top Header with Brand & Top Cart Symbol with Live Badge */}
         <View style={styles.topRow}>
-          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconBtn}>
-            <Ionicons name="arrow-back" size={24} color="#1b4d58" />
-          </TouchableOpacity>
-
-          <Text style={styles.screenTitle} numberOfLines={1}>
-            {categoryName}
-          </Text>
-
-          <View style={styles.rightIcons}>
-            <TouchableOpacity
-              style={styles.iconBtn}
-              onPress={() => navigation.navigate('MainTabs', { screen: 'Home' })}
-            >
-              <Ionicons name="home-outline" size={24} color="#1b4d58" />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.iconBtn, styles.cartBtn]}
-              onPress={() => navigation.navigate('MainTabs', { screen: 'Cart' })}
-            >
-              <Ionicons name="cart-outline" size={26} color="#1b4d58" />
-              {totalCount > 0 && (
-                <View style={styles.cartBadge}>
-                  <Text style={styles.cartBadgeText}>{totalCount}</Text>
-                </View>
-              )}
-            </TouchableOpacity>
+          <View style={styles.logoBox}>
+            <Text style={styles.logoText}>MyShoppy</Text>
+            <View style={styles.underlineRow}>
+              <View style={styles.logoUnderline} />
+              <View style={styles.logoDot} />
+            </View>
           </View>
+
+          <TouchableOpacity
+            style={styles.cartButton}
+            onPress={() => navigation.navigate('MainTabs', { screen: 'Cart' })}
+          >
+            <Ionicons name="cart-outline" size={26} color="#333" />
+            {totalCount > 0 && (
+              <View style={styles.cartBadge}>
+                <Text style={styles.cartBadgeText}>{totalCount}</Text>
+              </View>
+            )}
+          </TouchableOpacity>
         </View>
 
-        <Text style={styles.breadcrumb}>Categories / {categoryName}</Text>
-        <Text style={styles.headerTitle}>{categoryName} For You</Text>
+        {/* Wireframe Breadcrumbs & Header Title with Back navigation */}
+        <TouchableOpacity
+          style={styles.breadcrumbRow}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="arrow-back" size={18} color="#4E6E70" style={{ marginRight: 6 }} />
+          <Text style={styles.breadcrumb}>Categories/ {categoryName}</Text>
+        </TouchableOpacity>
+
+        <Text style={styles.headerTitle}>{categoryName} For You!</Text>
 
         <FlatList
           data={products}
@@ -99,7 +124,7 @@ export default function ProductListScreen({ route, navigation }: any) {
           numColumns={2}
           columnWrapperStyle={styles.row}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 20 }}
+          contentContainerStyle={{ paddingBottom: 80 }}
           ListEmptyComponent={
             <Text style={styles.emptyText}>No products available in this category.</Text>
           }
@@ -122,33 +147,44 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 24) + 6 : 8,
+    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 24) + 8 : 12,
     paddingBottom: 8,
-    marginBottom: 6,
   },
-  screenTitle: {
-    fontSize: 18,
+  logoBox: {
+    alignItems: 'flex-start',
+  },
+  logoText: {
+    fontSize: 24,
+    color: '#4E6E70',
     fontWeight: 'bold',
-    color: '#1b4d58',
-    textAlign: 'center',
-    flex: 1,
-    marginHorizontal: 8,
+    fontStyle: 'italic',
   },
-  rightIcons: {
+  underlineRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: 2,
   },
-  iconBtn: {
-    padding: 6,
+  logoUnderline: {
+    width: 55,
+    height: 2.5,
+    backgroundColor: '#4E6E70',
+    borderRadius: 2,
   },
-  cartBtn: {
+  logoDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: '#4E6E70',
+    marginLeft: 2,
+  },
+  cartButton: {
     position: 'relative',
-    marginLeft: 6,
+    padding: 4,
   },
   cartBadge: {
     position: 'absolute',
     top: -2,
-    right: -2,
+    right: -4,
     backgroundColor: '#E53935',
     borderRadius: 9,
     minWidth: 18,
@@ -163,61 +199,92 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: 'bold',
   },
+  breadcrumbRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+    marginBottom: 4,
+  },
   breadcrumb: {
-    fontSize: 13,
-    color: '#666',
-    marginBottom: 2,
+    fontSize: 14,
+    color: '#4E6E70',
+    fontWeight: '500',
   },
   headerTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#2F4F4F',
-    marginBottom: 14,
+    color: '#1A202C',
+    marginBottom: 16,
   },
   row: {
     justifyContent: 'space-between',
   },
   card: {
     width: '48%',
-    backgroundColor: '#FAFAFA',
-    borderRadius: 8,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
     padding: 10,
-    marginBottom: 14,
+    marginBottom: 16,
     borderWidth: 1,
-    borderColor: '#E0E0E0',
+    borderColor: '#E8EDF2',
     justifyContent: 'space-between',
+    elevation: 1,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    shadowOffset: { width: 0, height: 1 },
+  },
+  imageBox: {
+    position: 'relative',
+    width: '100%',
+    height: 125,
+    borderRadius: 8,
+    overflow: 'hidden',
+    backgroundColor: '#F7FAFC',
+    marginBottom: 10,
   },
   productImage: {
     width: '100%',
-    height: 110,
-    borderRadius: 6,
-    marginBottom: 8,
-    backgroundColor: '#EEE',
+    height: '100%',
+  },
+  heartButton: {
+    position: 'absolute',
+    top: 6,
+    right: 6,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    width: 26,
+    height: 26,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
   },
   productTitle: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#1A202C',
     marginBottom: 4,
   },
   price: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#4A7C7C',
+    color: '#1E4D48',
     marginBottom: 4,
   },
   description: {
     fontSize: 11,
-    color: '#777',
-    marginBottom: 8,
+    color: '#718096',
+    marginBottom: 10,
     height: 28,
   },
   addButton: {
-    backgroundColor: '#4A7C7C',
-    paddingVertical: 7,
-    borderRadius: 6,
+    backgroundColor: '#1E4D48',
+    paddingVertical: 8,
+    borderRadius: 20,
     alignItems: 'center',
-    marginTop: 4,
   },
   addedButton: {
     backgroundColor: '#2E7D32',

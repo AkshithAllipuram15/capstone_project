@@ -5,6 +5,7 @@ export const appImages: Record<string, any> = {
   'home-decor.jpg': require('../../assets/images/home-decor.jpg'),
   'Kitchen-Essentials.jpg': require('../../assets/images/Kitchen-Essentials.jpg'),
   'Storage-items.jpg': require('../../assets/images/Storage-items.jpg'),
+  'tech-gadgets.jpg': require('../../assets/images/tech-gadgets.jpg'),
   'home-screen.png': require('../../assets/images/home-screen.png'),
   'logo.jpeg': require('../../assets/images/logo.jpeg'),
 
@@ -22,6 +23,10 @@ export const appImages: Record<string, any> = {
   'wardrobe-organizer.jpg': require('../../assets/images/wardrobe-organizer.jpg'),
   'daily-backpack.jpg': require('../../assets/images/daily-backpack.jpg'),
   'leather-wallet.jpg': require('../../assets/images/leather-wallet.jpg'),
+  'wireless-headphones.jpg': require('../../assets/images/wireless-headphones.jpg'),
+  'smart-watch.jpg': require('../../assets/images/smart-watch.jpg'),
+  'gaming-console.jpg': require('../../assets/images/gaming-console.jpg'),
+  'smart-tablet.jpg': require('../../assets/images/smart-tablet.jpg'),
 };
 
 export const getImage = (imageName?: string) => {
