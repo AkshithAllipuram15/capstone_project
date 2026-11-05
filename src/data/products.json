@@ -35,15 +35,15 @@
     {
       "id": "101",
       "categoryId": "3",
-      "name": "Modern Red Chair",
+      "name": "Modern Yellow Chair",
       "price": 549,
       "originalPrice": 799,
       "discount": "31% OFF",
       "rating": 4.8,
       "reviews": 129,
       "inStock": true,
-      "description": "Ergonomic modern red accent chair with solid wooden legs and premium velvet cushioning.",
-      "image": "home-decor.jpg"
+      "description": "Ergonomic modern yellow accent chair with solid wooden legs and premium velvet cushioning.",
+      "image": "modern-yellow-chair.jpg"
     },
     {
       "id": "102",
@@ -56,7 +56,7 @@
       "reviews": 85,
       "inStock": true,
       "description": "Minimalist circular dining table crafted with natural oak wood finish and durable build.",
-      "image": "home-decor.jpg"
+      "image": "dining-table.jpg"
     },
     {
       "id": "103",
@@ -69,7 +69,7 @@
       "reviews": 94,
       "inStock": true,
       "description": "Contemporary desk and bedside lamp with dimmable warm LED light and touch controls.",
-      "image": "home-decor.jpg"
+      "image": "led-table-lamp.jpg"
     },
     {
       "id": "104",
@@ -82,7 +82,7 @@
       "reviews": 210,
       "inStock": true,
       "description": "Hand-poured soy wax scented candle with natural lavender and vanilla essential oils.",
-      "image": "home-decor.jpg"
+      "image": "aromatherapy-candle.jpg"
     },
     {
       "id": "201",
@@ -95,7 +95,7 @@
       "reviews": 156,
       "inStock": true,
       "description": "Clear measuring cups with easy-marked labels and durable food-grade stainless steel construction.",
-      "image": "Kitchen-Essentials.jpg"
+      "image": "measuring-cup-set.jpg"
     },
     {
       "id": "202",
@@ -108,7 +108,7 @@
       "reviews": 112,
       "inStock": true,
       "description": "Professional 3-piece non-stick induction compatible pots and pans cookware set.",
-      "image": "Kitchen-Essentials.jpg"
+      "image": "stainless-steel-cookware.jpg"
     },
     {
       "id": "301",
@@ -121,7 +121,7 @@
       "reviews": 340,
       "inStock": true,
       "description": "Deep action fabric wash liquid detergent that removes tough stains while preserving color.",
-      "image": "Cleaning-Supplies.jpg"
+      "image": "liquid-detergent.jpg"
     },
     {
       "id": "302",
@@ -134,7 +134,7 @@
       "reviews": 280,
       "inStock": true,
       "description": "Instant antibacterial and antiviral surface cleaner and multi-surface sanitizer spray.",
-      "image": "Cleaning-Supplies.jpg"
+      "image": "disinfectant-spray.jpg"
     },
     {
       "id": "401",
@@ -147,7 +147,7 @@
       "reviews": 95,
       "inStock": true,
       "description": "Woven cotton rope organizer bins perfect for toys, laundry, and shelf storage.",
-      "image": "Storage-items.jpg"
+      "image": "storage-baskets.jpg"
     },
     {
       "id": "402",
@@ -160,7 +160,7 @@
       "reviews": 78,
       "inStock": true,
       "description": "Collapsible multi-layer fabric hanging wardrobe shelves for clothing and accessories.",
-      "image": "Storage-items.jpg"
+      "image": "wardrobe-organizer.jpg"
     },
     {
       "id": "501",
@@ -173,7 +173,7 @@
       "reviews": 142,
       "inStock": true,
       "description": "Water-resistant lightweight commuter laptop backpack with ergonomic shoulder straps.",
-      "image": "Daily-Use-Accessories.jpg"
+      "image": "daily-backpack.jpg"
     },
     {
       "id": "502",
@@ -186,8 +186,7 @@
       "reviews": 88,
       "inStock": true,
       "description": "Slim bifold genuine leather wallet with RFID blocking technology and multiple card slots.",
-      "image": "Daily-Use-Accessories.jpg"
+      "image": "leather-wallet.jpg"
     }
   ]
 }
-

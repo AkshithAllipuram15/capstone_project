@@ -34,49 +34,27 @@ const CartContext = createContext<CartContextType>({
 export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  const [cart, setCart] = useState<CartItem[]>([
-    {
-      id: "101",
-      name: "Modern Red Chair",
-      price: 549,
-      quantity: 2,
-      image: "home-decor.jpg",
-    },
-    {
-      id: "103",
-      name: "LED Table Lamp",
-      price: 1299,
-      quantity: 1,
-      image: "home-decor.jpg",
-    },
-    {
-      id: "104",
-      name: "Aromatherapy Candle",
-      price: 459,
-      quantity: 4,
-      image: "home-decor.jpg",
-    }
-  ]);
+  const [cart, setCart] = useState<CartItem[]>([]);
 
   const addToCart = (product: any, quantity: number = 1) => {
-    setCart(prevCart => {
-      const existing = prevCart.find(item => item.id === product.id);
+    setCart(prev => {
+      const existing = prev.find(item => item.id === product.id);
       if (existing) {
-        return prevCart.map(item =>
+        return prev.map(item =>
           item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
         );
       }
-      return [...prevCart, { ...product, quantity }];
+      return [...prev, { ...product, quantity }];
     });
   };
 
   const updateQuantity = (id: string, action: 'increase' | 'decrease') => {
-    setCart(prevCart =>
-      prevCart
+    setCart(prev =>
+      prev
         .map(item => {
           if (item.id === id) {
-            const newQty = action === 'increase' ? item.quantity + 1 : item.quantity - 1;
-            return newQty > 0 ? { ...item, quantity: newQty } : null;
+            const nextQty = action === 'increase' ? item.quantity + 1 : item.quantity - 1;
+            return nextQty > 0 ? { ...item, quantity: nextQty } : null;
           }
           return item;
         })
@@ -85,7 +63,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const removeFromCart = (id: string) => {
-    setCart(prevCart => prevCart.filter(item => item.id !== id));
+    setCart(prev => prev.filter(item => item.id !== id));
   };
 
   const clearCart = () => setCart([]);

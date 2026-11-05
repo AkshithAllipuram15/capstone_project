@@ -13,34 +13,39 @@ export default function OrderSuccessScreen({ navigation }: any) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        {/* Success Icon */}
-        <View style={styles.iconSquare}>
-          <Ionicons name="checkmark" size={60} color="#FFFFFF" />
+        {/* Brand Header */}
+        <View style={styles.header}>
+          <Text style={styles.logoText}>MyShoppy</Text>
+          <View style={styles.logoUnderline} />
+        </View>
+
+        {/* Checkmark Icon */}
+        <View style={styles.iconCircle}>
+          <Ionicons name="checkmark" size={50} color="#FFFFFF" />
         </View>
 
         <Text style={styles.successTitle}>Order Placed Successfully!</Text>
         <Text style={styles.subtitle}>Thank you for shopping with MyShoppy.</Text>
 
-        {/* Order Info Card */}
-        <View style={styles.card}>
+        {/* Order Details Box */}
+        <View style={styles.detailsBox}>
           <View style={styles.row}>
-            <Text style={styles.label}>Order ID</Text>
+            <Text style={styles.label}>Order ID:</Text>
             <Text style={styles.value}>#MS974145</Text>
           </View>
           <View style={styles.row}>
-            <Text style={styles.label}>Payment</Text>
+            <Text style={styles.label}>Payment Method:</Text>
             <Text style={styles.value}>Cash On Delivery</Text>
           </View>
           <View style={styles.row}>
-            <Text style={styles.label}>Estimated Delivery</Text>
+            <Text style={styles.label}>Estimated Delivery:</Text>
             <Text style={styles.value}>2 - 4 Days</Text>
           </View>
         </View>
 
-        {/* Continue Shopping Button */}
+        {/* Continue Button */}
         <TouchableOpacity
           style={styles.continueButton}
-          activeOpacity={0.85}
           onPress={() => navigation.navigate('MainTabs', { screen: 'Home' })}
         >
           <Text style={styles.continueButtonText}>Continue Shopping</Text>
@@ -51,63 +56,88 @@ export default function OrderSuccessScreen({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: '#F8F9FA' },
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 24,
+    paddingHorizontal: 20,
   },
-  iconSquare: {
-    width: 90,
-    height: 90,
-    borderRadius: 22,
-    backgroundColor: '#48BB78',
+  header: {
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  logoText: {
+    fontSize: 24,
+    color: '#4A7C7C',
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+  },
+  logoUnderline: {
+    width: 45,
+    height: 3,
+    backgroundColor: '#4A7C7C',
+    marginTop: 4,
+    borderRadius: 2,
+  },
+  iconCircle: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: '#4CAF50',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 24,
-    elevation: 3,
-    shadowColor: '#48BB78',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
+    marginBottom: 16,
   },
   successTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#1A3333',
+    color: '#333',
+    marginBottom: 6,
     textAlign: 'center',
-    marginBottom: 8,
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: 13,
     color: '#666',
+    marginBottom: 24,
     textAlign: 'center',
-    marginBottom: 28,
   },
-  card: {
+  detailsBox: {
     width: '100%',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 32,
+    backgroundColor: '#FAFAFA',
     borderWidth: 1,
-    borderColor: '#EAEAEA',
-    gap: 14,
+    borderColor: '#E0E0E0',
+    borderRadius: 8,
+    padding: 14,
+    marginBottom: 24,
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    paddingVertical: 4,
   },
-  label: { fontSize: 14, color: '#666' },
-  value: { fontSize: 14, fontWeight: 'bold', color: '#1A3333' },
+  label: {
+    fontSize: 13,
+    color: '#666',
+  },
+  value: {
+    fontSize: 13,
+    fontWeight: 'bold',
+    color: '#333',
+  },
   continueButton: {
     width: '100%',
-    backgroundColor: '#2A6B6B',
-    paddingVertical: 14,
-    borderRadius: 25,
+    backgroundColor: '#4A7C7C',
+    paddingVertical: 12,
+    borderRadius: 6,
     alignItems: 'center',
   },
-  continueButtonText: { color: '#FFF', fontSize: 16, fontWeight: 'bold' },
+  continueButtonText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
 });

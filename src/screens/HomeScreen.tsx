@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -6,106 +6,75 @@ import {
   Image,
   ScrollView,
   SafeAreaView,
-  TextInput,
   TouchableOpacity,
-  Dimensions,
+  Platform,
+  StatusBar,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { getImage } from '../utils/imageMap';
 import data from '../data/products.json';
 
-const { width } = Dimensions.get('window');
-
 export default function HomeScreen({ navigation }: any) {
-  const [searchQuery, setSearchQuery] = useState('');
-
-  // Top 4 categories for the home grid
-  const homeCategories = data.categories.slice(0, 4);
+  const categories = data.categories;
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Header Logo */}
+      <ScrollView style={styles.container}>
+        {/* Brand Header */}
         <View style={styles.header}>
-          <Image
-            source={getImage('logo.jpeg')}
-            style={styles.logo}
-            resizeMode="contain"
-          />
+          <Text style={styles.logoText}>MyShoppy</Text>
+          <View style={styles.logoUnderline} />
         </View>
 
-        {/* Search Bar */}
-        <View style={styles.searchContainer}>
-          <Ionicons name="search-outline" size={20} color="#777" style={styles.searchIcon} />
-          <TextInput
-            placeholder="Search products"
-            placeholderTextColor="#888"
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-            style={styles.searchInput}
-          />
-        </View>
-
-        {/* Hero Promotional Card */}
-        <View style={styles.bannerContainer}>
+        {/* Promo Image */}
+        <View style={styles.imageContainer}>
           <Image
             source={getImage('home-screen.png')}
-            style={styles.bannerImage}
+            style={styles.promoImage}
             resizeMode="cover"
           />
-          <View style={styles.bannerOverlay}>
-            <Text style={styles.bannerTitle}>Fresh finds for every room</Text>
-            <Text style={styles.bannerSubtitle}>
-              Discover stylish home essentials and daily-use favorites.
-            </Text>
-            <TouchableOpacity
-              style={styles.shopNowButton}
-              onPress={() => navigation.navigate('Categories')}
-            >
-              <Text style={styles.shopNowText}>Shop Now</Text>
-            </TouchableOpacity>
-          </View>
         </View>
 
-        {/* Shop by Category Section */}
-        <View style={styles.sectionHeader}>
-          <View style={styles.sectionTitleRow}>
-            <Text style={styles.sectionEmoji}>🛍️</Text>
-            <Text style={styles.sectionTitle}>Shop by Category</Text>
-          </View>
-          <TouchableOpacity onPress={() => navigation.navigate('Categories')}>
-            <Text style={styles.seeAllText}>See all</Text>
+        {/* Welcome Section */}
+        <View style={styles.welcomeBox}>
+          <Text style={styles.welcomeTitle}>Shopping And Department Store</Text>
+          <Text style={styles.welcomeSubtitle}>
+            Welcome to MyShoppy. Find all your home, kitchen, and daily essentials at great prices.
+          </Text>
+          <TouchableOpacity
+            style={styles.browseButton}
+            onPress={() => navigation.navigate('Categories')}
+          >
+            <Text style={styles.browseButtonText}>Browse Categories</Text>
           </TouchableOpacity>
         </View>
 
-        {/* 2x2 Category Grid */}
-        <View style={styles.categoryGrid}>
-          {homeCategories.map((category) => (
-            <TouchableOpacity
-              key={category.id}
-              style={styles.categoryCard}
-              activeOpacity={0.85}
-              onPress={() =>
-                navigation.navigate('ProductList', {
-                  categoryId: category.id,
-                  categoryName: category.name,
-                })
-              }
-            >
-              <Image
-                source={getImage(category.image)}
-                style={styles.categoryImage}
-                resizeMode="cover"
-              />
-              <View style={styles.categoryGradient}>
-                <Text style={styles.categoryName}>{category.name}</Text>
-              </View>
-            </TouchableOpacity>
-          ))}
+        {/* Categories Preview */}
+        <Text style={styles.sectionTitle}>Featured Categories</Text>
+        <View style={styles.grid}>
+          {categories.map((item: any, index: number) => {
+            const isLastOdd = index === categories.length - 1 && categories.length % 2 !== 0;
+            return (
+              <TouchableOpacity
+                key={item.id}
+                style={[styles.card, isLastOdd && styles.cardFull]}
+                activeOpacity={0.85}
+                onPress={() =>
+                  navigation.navigate('ProductList', {
+                    categoryId: item.id,
+                    categoryName: item.name,
+                  })
+                }
+              >
+                <Image
+                  source={getImage(item.image)}
+                  style={styles.cardImage}
+                  resizeMode="cover"
+                />
+                <Text style={styles.cardName}>{item.name}</Text>
+              </TouchableOpacity>
+            );
+          })}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -115,147 +84,108 @@ export default function HomeScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: '#FFFFFF',
   },
   container: {
-    flex: 1,
-  },
-  contentContainer: {
     paddingHorizontal: 16,
-    paddingBottom: 30,
   },
   header: {
     alignItems: 'center',
-    marginVertical: 12,
+    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 24) + 6 : 14,
+    marginBottom: 14,
   },
-  logo: {
-    width: 150,
-    height: 48,
+  logoText: {
+    fontSize: 24,
+    color: '#4A7C7C',
+    fontWeight: 'bold',
+    fontStyle: 'italic',
   },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    paddingHorizontal: 14,
-    height: 48,
-    marginBottom: 16,
-    borderWidth: 1,
-    borderColor: '#E5E7EB',
+  logoUnderline: {
+    width: 45,
+    height: 3,
+    backgroundColor: '#4A7C7C',
+    marginTop: 4,
+    borderRadius: 2,
   },
-  searchIcon: {
-    marginRight: 8,
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 15,
-    color: '#333',
-  },
-  bannerContainer: {
-    position: 'relative',
-    height: 220,
-    borderRadius: 20,
+  imageContainer: {
+    height: 200,
+    borderRadius: 8,
     overflow: 'hidden',
-    marginBottom: 24,
-    backgroundColor: '#DDD',
+    marginBottom: 16,
   },
-  bannerImage: {
+  promoImage: {
     width: '100%',
     height: '100%',
   },
-  bannerOverlay: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    top: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.35)',
+  welcomeBox: {
+    backgroundColor: '#F0F8F8',
     padding: 16,
-    justifyContent: 'flex-end',
+    borderRadius: 8,
+    marginBottom: 20,
   },
-  bannerTitle: {
-    fontSize: 22,
+  welcomeTitle: {
+    fontSize: 18,
     fontWeight: 'bold',
-    color: '#FFFFFF',
-    marginBottom: 4,
+    color: '#2F4F4F',
+    marginBottom: 8,
   },
-  bannerSubtitle: {
+  welcomeSubtitle: {
     fontSize: 13,
-    color: '#E5E7EB',
-    marginBottom: 12,
-    lineHeight: 18,
-  },
-  shopNowButton: {
-    backgroundColor: '#2A6B6B',
-    paddingVertical: 8,
-    paddingHorizontal: 18,
-    borderRadius: 20,
-    alignSelf: 'flex-start',
-  },
-  shopNowText: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  sectionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    color: '#555',
+    lineHeight: 19,
     marginBottom: 14,
   },
-  sectionTitleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  browseButton: {
+    backgroundColor: '#4A7C7C',
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 6,
+    alignSelf: 'flex-start',
   },
-  sectionEmoji: {
-    fontSize: 18,
-    marginRight: 6,
+  browseButtonText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 13,
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#1A3333',
+    color: '#333',
+    marginBottom: 12,
   },
-  seeAllText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#2A6B6B',
-  },
-  categoryGrid: {
+  grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    paddingBottom: 24,
   },
-  categoryCard: {
-    width: (width - 44) / 2,
+  card: {
+    width: '48%',
     height: 140,
-    borderRadius: 16,
+    borderRadius: 10,
     overflow: 'hidden',
-    marginBottom: 14,
-    backgroundColor: '#EEE',
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
+    marginBottom: 12,
+    backgroundColor: '#EEEEEE',
+    position: 'relative',
   },
-  categoryImage: {
+  cardFull: {
+    width: '100%',
+    height: 130,
+  },
+  cardImage: {
     width: '100%',
     height: '100%',
   },
-  categoryGradient: {
+  cardName: {
     position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    justifyContent: 'flex-end',
-  },
-  categoryName: {
+    bottom: 10,
+    left: 10,
+    right: 10,
     color: '#FFFFFF',
     fontSize: 15,
     fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 3,
   },
 });

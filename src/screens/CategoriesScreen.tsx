@@ -8,16 +8,18 @@ import {
   Image,
   SafeAreaView,
   TextInput,
+  Platform,
+  StatusBar,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import data from '../data/products.json';
 import { getImage } from '../utils/imageMap';
 
 export default function CategoriesScreen({ navigation }: any) {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [search, setSearch] = useState('');
 
-  const filteredCategories = data.categories.filter((cat) =>
-    cat.name.toLowerCase().includes(searchQuery.toLowerCase())
+  const filtered = data.categories.filter((cat: any) =>
+    cat.name.toLowerCase().includes(search.toLowerCase())
   );
 
   const renderCategory = ({ item }: { item: any }) => (
@@ -33,40 +35,43 @@ export default function CategoriesScreen({ navigation }: any) {
     >
       <Image
         source={getImage(item.image)}
-        style={styles.image}
+        style={styles.cardImage}
         resizeMode="cover"
       />
-      <View style={styles.cardOverlay}>
-        <Text style={styles.categoryName}>{item.name}</Text>
-      </View>
+      <Text style={styles.categoryName}>{item.name}</Text>
     </TouchableOpacity>
   );
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
+        {/* Brand Header */}
         <View style={styles.header}>
-          <Text style={styles.title}>Shop by Category</Text>
-          <Text style={styles.subtitle}>Find products by your favorite category</Text>
+          <Text style={styles.logoText}>MyShoppy</Text>
+          <View style={styles.logoUnderline} />
         </View>
 
-        <View style={styles.searchContainer}>
-          <Ionicons name="search-outline" size={20} color="#777" style={styles.searchIcon} />
+        <Text style={styles.title}>Shop by Category</Text>
+        <Text style={styles.subtitle}>Find products by your favorite category</Text>
+
+        {/* Search */}
+        <View style={styles.searchBar}>
+          <Ionicons name="search" size={18} color="#777" />
           <TextInput
             placeholder="Search categories"
-            placeholderTextColor="#888"
-            value={searchQuery}
-            onChangeText={setSearchQuery}
+            value={search}
+            onChangeText={setSearch}
             style={styles.searchInput}
           />
         </View>
 
+        {/* Category Cards with Images Filling the Cards */}
         <FlatList
-          data={filteredCategories}
+          data={filtered}
           keyExtractor={(item) => item.id}
           renderItem={renderCategory}
-          contentContainerStyle={styles.listContainer}
           showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 20 }}
         />
       </View>
     </SafeAreaView>
@@ -74,54 +79,78 @@ export default function CategoriesScreen({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: '#F8F9FA' },
-  container: { flex: 1, paddingHorizontal: 16 },
-  header: { marginTop: 16, marginBottom: 14 },
-  title: { fontSize: 24, fontWeight: 'bold', color: '#1B4D4F', marginBottom: 4 },
-  subtitle: { fontSize: 14, color: '#666' },
-  searchContainer: {
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
+  container: {
+    flex: 1,
+    paddingHorizontal: 16,
+  },
+  header: {
+    alignItems: 'flex-start',
+    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 24) + 6 : 10,
+    marginBottom: 10,
+  },
+  logoText: {
+    fontSize: 22,
+    color: '#4A7C7C',
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+  },
+  logoUnderline: {
+    width: 40,
+    height: 3,
+    backgroundColor: '#4A7C7C',
+    marginTop: 3,
+    borderRadius: 2,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#222',
+    marginTop: 6,
+  },
+  subtitle: {
+    fontSize: 13,
+    color: '#777',
+    marginBottom: 12,
+  },
+  searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    paddingHorizontal: 14,
-    height: 48,
-    marginBottom: 16,
-    borderWidth: 1,
-    borderColor: '#E5E7EB',
+    backgroundColor: '#F5F5F5',
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    height: 42,
+    marginBottom: 14,
   },
-  searchIcon: { marginRight: 8 },
-  searchInput: { flex: 1, fontSize: 15, color: '#333' },
-  listContainer: { paddingBottom: 24 },
+  searchInput: {
+    flex: 1,
+    marginLeft: 8,
+    fontSize: 14,
+  },
   card: {
     height: 140,
-    borderRadius: 16,
-    marginBottom: 16,
+    borderRadius: 12,
     overflow: 'hidden',
-    backgroundColor: '#E2E8F0',
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
+    marginBottom: 14,
+    backgroundColor: '#EEEEEE',
+    position: 'relative',
   },
-  image: {
+  cardImage: {
     width: '100%',
     height: '100%',
   },
-  cardOverlay: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    top: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.28)',
-    justifyContent: 'flex-end',
-    padding: 16,
-  },
   categoryName: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    position: 'absolute',
+    bottom: 12,
+    left: 14,
     color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 4,
   },
 });
